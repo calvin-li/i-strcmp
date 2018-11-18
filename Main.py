@@ -6,7 +6,7 @@ import os
 def main():
     if not os.path.exists(constants.temp_folder):
         os.mkdir(constants.temp_folder)
-    test = strcmp("My My My My My My My My My My My My My My My My My My My My My My My My My My My My My My My My My My My My My")
+    test = strcmp("Google")
     return test
 
 

@@ -45,7 +45,7 @@ def svg_to_image(svg, scale_factor=4):
     png.scale(scale_factor, scale_factor)
     png_path = svg.replace(".svg", ".png")
 
-    renderPM.drawToFile(png, "file.png", fmt="PNG", dpi=72*scale_factor)
+    renderPM.drawToFile(png, png_path, fmt="PNG", dpi=72*scale_factor)
     return png_path
 
 
