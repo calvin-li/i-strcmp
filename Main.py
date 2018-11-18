@@ -1,8 +1,12 @@
+from Constants import global_constants as constants
 from strcmp import strcmp
+import os
 
 
 def main():
-    test = strcmp("Google")
+    if not os.path.exists(constants.temp_folder):
+        os.mkdir(constants.temp_folder)
+    test = strcmp("My My My My My My My My My My My My My My My My My My My My My My My My My My My My My My My My My My My My My")
     return test
 
 

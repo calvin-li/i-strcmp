@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+<svg xmlns="http://www.w3.org/2000/svg" width="100 px" height="20px">
   <style>
-    { font: regular 13px sans-serif; }
+    { font: regular 14px sans-serif; }
   </style>
 
-  <text x="0" y="13%">My My My My My My My My My My My My My My My My My My My My My My My My My My My My My My My My My My My My My</text>
+  <text x="5px" y="15px">My My My My My My My My My My My My My My My My My My My My My My My My My My My My My My My My My My My My My</text>
 </svg>
