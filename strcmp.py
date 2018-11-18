@@ -1,12 +1,12 @@
-from ImageMaker import text_to_image
+import ImageMaker
 
 
 def strcmp(candidate):
     # create image of string
-    textImg = text_to_image(candidate)
+    textImg = ImageMaker.svg_to_image(ImageMaker.text_to_svg(candidate))
 
     # attempt OCR
 
-    #process results?
+    # process results?
 
     return True

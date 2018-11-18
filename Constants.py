@@ -11,6 +11,10 @@ class Constants(object):
     def default_font_size(self):
         return 14
 
+    @property
+    def default_scale_factor(self):
+        return 4
+
 
 global_constants: Constants = Constants()
 

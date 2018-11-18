@@ -40,14 +40,10 @@ def text_to_svg(input_text, font_string="", weight="regular", family="sans-serif
     return svg_name
 
 
-def svg_to_image(svg, scale_factor=4):
+def svg_to_image(svg, scale_factor=constants.default_scale_factor):
     png = svglib.svg2rlg(svg)
     png.scale(scale_factor, scale_factor)
     png_path = svg.replace(".svg", ".png")
 
     renderPM.drawToFile(png, png_path, fmt="PNG", dpi=72*scale_factor)
     return png_path
-
-
-def text_to_image(text):
-    return svg_to_image(text_to_svg(text))
