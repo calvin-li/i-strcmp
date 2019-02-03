@@ -16,7 +16,7 @@ def main():
     forbidden_images = [text_to_image(s, temp_folder) for s in constants.forbidden_strings]
     test = strcmp("Google", forbidden_images, temp_folder)
 
-    shutil.rmtree(temp_folder)
+    #shutil.rmtree(temp_folder)
     return test
 
 

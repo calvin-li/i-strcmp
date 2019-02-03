@@ -17,7 +17,7 @@ class Constants(object):
 
     @property
     def forbidden_strings(self):
-        return ["Google", "Googler", "Apple"]
+        return ["Google", "Gооgle", "Apple"]
 
 
 global_constants: Constants = Constants()
