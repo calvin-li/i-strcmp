@@ -15,6 +15,10 @@ class Constants(object):
     def default_scale_factor(self):
         return 4
 
+    @property
+    def forbidden_strings(self):
+        return ["Google", "Googler", "Apple"]
+
 
 global_constants: Constants = Constants()
 

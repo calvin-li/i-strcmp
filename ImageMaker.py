@@ -1,3 +1,4 @@
+import hashlib
 import xml.etree.ElementTree as eTree
 from datetime import datetime
 
@@ -12,7 +13,7 @@ def default_font_string(weight, family):
     return "\n\t{{ font: {0} {1}px {2}; }}\n".format(weight, constants.default_font_size, family)
 
 
-def text_to_svg(input_text, font_string="", weight="regular", family="sans-serif"):
+def text_to_svg(input_text, temp_folder, font_string="", weight="regular", family="sans-serif"):
     style_tag = '{http://www.w3.org/2000/svg}'
     svg = eTree.parse("template.svg")
     svg_root = svg.getroot()
@@ -34,8 +35,8 @@ def text_to_svg(input_text, font_string="", weight="regular", family="sans-serif
     svg_text.attrib["x"] = str(constants.text_margins) + "px"
     svg_text.attrib["y"] = str(text_height) + "px"
 
-    svg_name = "{0}/generated.{1}.svg".format(
-        constants.temp_folder, datetime.now().isoformat())
+    svg_name = "{0}/{1}.svg".format(
+        temp_folder, str(abs(hash(input_text)) % (10 ** 8)))
     svg.write(svg_name)
     return svg_name
 
@@ -45,5 +46,13 @@ def svg_to_image(svg, scale_factor=constants.default_scale_factor):
     png.scale(scale_factor, scale_factor)
     png_path = svg.replace(".svg", ".png")
 
-    renderPM.drawToFile(png, png_path, fmt="PNG", dpi=72*scale_factor)
+    img_to_file(png, png_path, scale_factor)
     return png_path
+
+
+def text_to_image(text, temp_folder):
+    return svg_to_image(text_to_svg(text, temp_folder))
+
+
+def img_to_file(png, png_path, scale_factor=constants.default_scale_factor):
+    renderPM.drawToFile(png, png_path, fmt="PNG", dpi=72 * scale_factor)
