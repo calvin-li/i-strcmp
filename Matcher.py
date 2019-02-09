@@ -14,14 +14,19 @@ def match_one(image_path, template_path):
 
 
 def get_score(results):
+    scores = dict()
     for i in range(0, len(constants.forbidden_strings)):
-        print(constants.forbidden_strings[i])
+        text = constants.forbidden_strings[i]
+        scores[text] = dict()
         for j in range(0, len(match_methods)):
             min_val, max_val, _, _ = cv2.minMaxLoc(results[i][j])
-            print("\t{0}\n\t\t{1}\t{2}".format(
-                match_methods[j], min_val, max_val))
+            method = match_methods[j]
+            if method == 'cv2.TM_SQDIFF_NORMED':
+                max_val = 1 - min_val
+            scores[text][method] = max_val
+    return scores
 
 
 def match(image_path, templates):
     results = [match_one(image_path, t) for t in templates]
-    get_score(results)
+    print(get_score(results))

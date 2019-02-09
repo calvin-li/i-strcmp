@@ -1,9 +1,4 @@
-import hashlib
-import xml.etree.ElementTree as eTree
-from datetime import datetime
-
-from reportlab.graphics import renderPM
-from svglib import svglib
+from PIL import ImageDraw, Image, ImageFont
 
 from Constants import global_constants as constants
 from find_text_dimensions import find_text_dimensions
@@ -13,46 +8,22 @@ def default_font_string(weight, family):
     return "\n\t{{ font: {0} {1}px {2}; }}\n".format(weight, constants.default_font_size, family)
 
 
-def text_to_svg(input_text, temp_folder, font_string="", weight="regular", family="sans-serif"):
-    style_tag = '{http://www.w3.org/2000/svg}'
-    svg = eTree.parse("template.svg")
-    svg_root = svg.getroot()
-
-    if font_string == "":
-        font_string = default_font_string(weight, family)
-    text_width, text_height = find_text_dimensions(input_text, constants.default_font_size)
-
-    width = text_width + 2 * constants.text_margins
-    height = text_height + 2 * constants.text_margins
-    svg_root.attrib["width"] = str(width) + "px"
-    svg_root.attrib["height"] = str(height) + "px"
-
-    svg_style = svg_root.find(style_tag + "style")
-    svg_style.text = font_string
-
-    svg_text = svg_root.find(style_tag + "text")
-    svg_text.text = input_text
-    svg_text.attrib["x"] = str(constants.text_margins) + "px"
-    svg_text.attrib["y"] = str(text_height) + "px"
-
-    svg_name = "{0}/{1}.svg".format(
+def get_image_name(input_text, temp_folder):
+    return "{0}/{1}.png".format(
         temp_folder, str(abs(hash(input_text)) % (10 ** 8)))
-    svg.write(svg_name)
-    return svg_name
 
 
-def svg_to_image(svg, scale_factor=constants.default_scale_factor):
-    png = svglib.svg2rlg(svg)
-    png.scale(scale_factor, scale_factor)
-    png_path = svg.replace(".svg", ".png")
-
-    img_to_file(png, png_path, scale_factor)
-    return png_path
-
-
-def text_to_image(text, temp_folder):
-    return svg_to_image(text_to_svg(text, temp_folder))
-
-
-def img_to_file(png, png_path, scale_factor=constants.default_scale_factor):
-    renderPM.drawToFile(png, png_path, fmt="PNG", dpi=72 * scale_factor)
+def text_to_image(text, temp_folder, x_padding=0):
+    text_width, text_height = find_text_dimensions(text, constants.default_font_size)
+    x_padding += constants.text_margins
+    width = text_width + 2 * x_padding
+    height = text_height + 2 * constants.text_margins
+    image = Image.new('RGB', (int(width), int(height)))
+    draw = ImageDraw.Draw(image)
+    draw.text(
+        (constants.default_start_x + x_padding / 2, constants.default_start_y),
+        text,
+        font=ImageFont.truetype("Arial.ttf", constants.default_font_size))
+    image_path = get_image_name(text, temp_folder)
+    image.save(image_path, "png")
+    return image_path
