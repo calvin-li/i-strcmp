@@ -14,9 +14,15 @@ def main():
     if not os.path.exists(temp_folder):
         os.mkdir(temp_folder)
     forbidden_images = [text_to_image(s, temp_folder) for s in constants.forbidden_strings]
-    test = strcmp("Google", forbidden_images, temp_folder)
+    test = [strcmp(
+        "Google",
+        constants.forbidden_strings[i],
+        forbidden_images[i],
+        temp_folder)
+        for i in range(0, len(forbidden_images))]
 
-    #shutil.rmtree(temp_folder)
+    # shutil.rmtree(temp_folder)
+    print(test)
     return test
 
 

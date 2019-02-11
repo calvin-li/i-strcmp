@@ -9,7 +9,7 @@ class Constants(object):
 
     @property
     def default_font_size(self):
-        return 14
+        return 140
 
     @property
     def default_scale_factor(self):
@@ -25,7 +25,15 @@ class Constants(object):
 
     @property
     def forbidden_strings(self):
-        return ["Google", "Gооgle", "Apple", "G oogle"]
+        return ["Google",
+                "Gøøgle",
+                "Gооgle",
+                "Apple",
+                "G\u2009oogle",
+                "G\u200boogle",
+                "G\u2009o\u2009o\u2009g\u2009l\u2009e",
+                "G00gle"
+                ]
 
 
 global_constants: Constants = Constants()

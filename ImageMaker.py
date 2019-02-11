@@ -18,7 +18,7 @@ def text_to_image(text, temp_folder, x_padding=0):
     x_padding += constants.text_margins
     width = text_width + 2 * x_padding
     height = text_height + 2 * constants.text_margins
-    image = Image.new('RGB', (int(width), int(height)))
+    image = Image.new('L', (int(width), int(height)), 256)
     draw = ImageDraw.Draw(image)
     draw.text(
         (constants.default_start_x + x_padding / 2, constants.default_start_y),
