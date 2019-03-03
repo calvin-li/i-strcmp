@@ -23,7 +23,7 @@ def text_to_image(text, temp_folder, x_padding=0):
     draw.text(
         (constants.default_start_x + x_padding / 2, constants.default_start_y),
         text,
-        font=ImageFont.truetype("Arial.ttf", constants.default_font_size))
+        font=ImageFont.truetype("AmericanTypewriter.ttc", constants.default_font_size))
     image_path = get_image_name(text, temp_folder)
     image.save(image_path, "png")
     return image_path
